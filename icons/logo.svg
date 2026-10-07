@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 80">
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff2a35"/>
+      <stop offset="1" stop-color="#7a050b"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b0709"/>
+      <stop offset="1" stop-color="#050506"/>
+    </linearGradient>
+    <linearGradient id="txt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff3b46"/>
+      <stop offset="1" stop-color="#b3060f"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(8 8) scale(1.0)">
+    <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+    <rect x="3" y="3" width="58" height="58" rx="11" fill="none" stroke="url(#ring)" stroke-width="3"/>
+    <g fill="none" stroke="#e50914" stroke-width="4.2" stroke-linecap="round">
+      <path d="M12 8 Q22 30 20 56"/><path d="M27 6 Q38 30 36 58"/><path d="M43 8 Q53 30 51 56"/>
+    </g>
+    <path d="M16 13h9v14h14V13h9v38h-9V35H25v16h-9z" fill="#f4f1ec" stroke="#050506" stroke-width="1.5" stroke-linejoin="round"/>
+
+    <path d="M20 56 q-3 4 0 6 q3 -2 0 -6z" fill="#e50914"/>
+  </g>
+  <text x="86" y="55" font-family="Arial Black, Impact, Arial, sans-serif" font-weight="900" font-size="42" letter-spacing="3" fill="url(#txt)" stroke="#2a0306" stroke-width="1">HORRORMAX</text>
+  <path d="M392 62 q-3 7 0 10 q3 -3 0 -10z" fill="#e50914"/>
+</svg>

@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta name="hm-mode" content="static">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HORRORMAX – Korku Filmi Kütüphanesi</title>
+<link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<meta name="theme-color" content="#0a0a0c">
+<style>
+:root{--bg:#0a0a0c;--panel:#16161b;--red:#e50914;--txt:#f3f3f3;--mut:#9a9aa5}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 4%;background:linear-gradient(#000c,#0000);transition:background .3s}
+nav.solid{background:#0a0a0cf2;backdrop-filter:blur(8px)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:3px;font-size:1.5rem;color:var(--red);text-shadow:0 0 18px #e5091466;cursor:pointer}
+nav a{color:#ddd;text-decoration:none;font-size:.9rem;cursor:pointer}
+nav a:hover{color:#fff}
+.sp{flex:1}
+.search{display:flex;align-items:center;background:#0008;border:1px solid #fff4;border-radius:4px;padding:6px 10px;gap:6px}
+.search input{background:none;border:0;outline:0;color:#fff;width:170px;font-size:.9rem}
+.cnt{font-size:.8rem;color:var(--mut);white-space:nowrap}
+nav a{white-space:nowrap}
+@media(max-width:1250px){.cnt{display:none}}
+/* HERO */
+.hero{position:relative;height:88vh;min-height:520px;display:flex;align-items:flex-end;padding:0 4% 9vh;overflow:hidden;transition:background .6s}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 75% 35%,transparent 0,#0a0a0c 75%),linear-gradient(0deg,var(--bg) 4%,transparent 45%),linear-gradient(90deg,#0a0a0ce0 15%,transparent 70%)}
+.hero .bd{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 30%;opacity:0;transition:opacity .6s;transform:scale(1.04)}
+.hero.hasbd .bd{opacity:1;animation:kb 14s ease-out forwards}
+@keyframes kb{to{transform:scale(1.12)}}
+.hero.hasbd::before{background:linear-gradient(0deg,var(--bg) 2%,transparent 42%),linear-gradient(90deg,#0a0a0cd9 8%,#0a0a0c40 55%,transparent 80%)}
+.hero.hasph .bd{opacity:.5;filter:blur(26px) saturate(1.3);transform:scale(1.3);animation:none}
+.hero.hasph::before{background:linear-gradient(0deg,var(--bg) 2%,transparent 45%),linear-gradient(90deg,#0a0a0cd0 8%,transparent 75%)}
+.hero.hasbd .big{opacity:.22;mix-blend-mode:overlay}
+.hero .in,.hero .hp,.hero .bd{transition:opacity .35s}
+.hero.swap .in,.hero.swap .hp,.hero.swap .bd{opacity:0}
+.hero .hp{position:absolute;right:9%;top:50%;transform:translateY(-52%) rotate(2deg);height:68%;aspect-ratio:2/3;border-radius:8px;box-shadow:0 20px 70px #000;object-fit:cover;z-index:1}
+@media(max-width:900px){.hero .hp{display:none}}
+.hero .big{position:absolute;right:6%;top:50%;transform:translateY(-55%);font-size:clamp(5rem,16vw,15rem);font-weight:900;opacity:.13;text-align:right;line-height:.9;max-width:55%;text-transform:uppercase;pointer-events:none}
+.hero .in{position:relative;z-index:2;max-width:620px}
+.tag{display:inline-block;font-size:.75rem;letter-spacing:2px;color:var(--red);font-weight:700;margin-bottom:10px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);line-height:1;margin-bottom:14px;text-shadow:0 4px 30px #000}
+.meta{display:flex;gap:14px;font-size:.95rem;margin-bottom:14px;color:#ccc;align-items:center;flex-wrap:wrap}
+.imdb{color:#f5c518;font-weight:700}
+.hero p{font-size:1.1rem;line-height:1.5;color:#ddd;margin-bottom:22px;text-shadow:0 2px 10px #000}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:5px;font-weight:700;font-size:1rem;margin-right:10px;transition:.2s}
+.btn.w{background:#fff;color:#000}.btn.w:hover{background:#ddd}
+.btn.g{background:#6d6d6eb3}.btn.g:hover{background:#6d6d6e66}
+/* FILTER CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px 10px;padding:10px 4% 6px;position:relative;z-index:5;margin-top:-6vh}
+.chip{white-space:nowrap;padding:7px 16px;border-radius:30px;border:1px solid #fff3;background:#16161bcc;font-size:.88rem;transition:.2s}
+.chip:hover{border-color:#fff9}
+.chip.on{background:var(--red);border-color:var(--red);font-weight:700}
+/* ROWS */
+.row{padding:22px 0 4px}
+.row h2{padding:0 4%;font-size:1.3rem;margin-bottom:4px;display:flex;align-items:baseline;gap:12px}
+.row h2 small{font-size:.8rem;color:var(--mut);font-weight:400}
+.row .desc{padding:0 4%;color:var(--mut);font-size:.88rem;margin-bottom:10px}
+.wrap{position:relative}
+.track{display:flex;gap:10px;overflow-x:auto;padding:12px 4% 26px;scrollbar-width:none;scroll-padding:0 4%}
+.track::-webkit-scrollbar{display:none}
+.arr{position:absolute;top:12px;bottom:26px;width:max(4%,38px);z-index:4;background:linear-gradient(90deg,#0a0a0cf0,#0a0a0c00);font-size:2.4rem;line-height:1;opacity:0;pointer-events:none;transition:opacity .25s;display:grid;place-items:center}
+.arr.r{background:linear-gradient(270deg,#0a0a0cf0,#0a0a0c00)}
+.arr.l{left:0}.arr.r{right:0}
+.wrap:hover .arr:not(.hide){opacity:1;pointer-events:auto}
+.arr:hover{font-size:2.9rem}
+.card{--cw:190px;flex:0 0 var(--cw);height:calc(var(--cw)*1.5);border-radius:6px;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.card.out{flex-basis:0;min-width:0;padding:0;margin-right:-10px;opacity:0;transform:scale(.8);pointer-events:none;transition:flex-basis .45s cubic-bezier(.4,0,.2,1),padding .45s,margin .45s,opacity .3s,transform .45s}
+.card.fade{opacity:0;transform:scale(.8);pointer-events:none;transition:opacity .3s,transform .3s}
+.card.pop{animation:cpop .55s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes cpop{from{transform:scale(.6);opacity:0}}
+.row.new{animation:rowIn .5s ease}
+@keyframes rowIn{from{opacity:0;transform:translateY(14px)}}
+.card:hover{transform:scale(1.08);z-index:3;box-shadow:0 10px 35px #000}
+.card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,#000d 8%,transparent 60%)}
+.card .yr{position:absolute;top:10px;left:10px;font-size:.72rem;font-weight:700;background:#000a;padding:2px 7px;border-radius:4px}
+.card .rt{position:absolute;top:10px;right:10px;font-size:.75rem;background:#000a;padding:2px 6px;border-radius:3px;color:#f5c518;font-weight:700}
+.card .gl{position:absolute;inset:0;display:grid;place-items:center;font-size:5.5rem;font-weight:900;opacity:.16;letter-spacing:-4px}
+.card .po{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .yr,.card .rt{z-index:2}
+.card h3{position:relative;z-index:2;font-size:1.05rem;line-height:1.15;text-shadow:0 2px 8px #000}
+.card .dr{position:relative;z-index:2;font-size:.74rem;color:#ccc;margin-top:4px}
+.card .fav{position:absolute;bottom:10px;right:10px;z-index:2;font-size:1.1rem;opacity:0;transition:.2s}
+.card:hover .fav,.card .fav.on{opacity:1}
+.card .sn{position:absolute;bottom:10px;left:10px;z-index:3;font-size:.72rem;background:#000b;border:1px solid #fff4;border-radius:4px;padding:3px 7px;opacity:0;transition:.2s}
+.card:hover .sn,.card.seen .sn{opacity:1}
+.card .po{transition:filter .6s}
+.card.seen .po{filter:grayscale(1) brightness(.8)}
+.card.seen:not(:has(.po)){filter:grayscale(1) brightness(.85)}
+.prog{height:5px;background:#fff2;border-radius:4px;overflow:hidden;width:min(260px,70%);margin:2px 4% 6px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#b20710,#e50914);border-radius:4px;transition:width .7s}
+.prog.done i{background:linear-gradient(90deg,#1f8a4c,#4ade80)}
+.collhead{padding:30px 4% 0}.collhead h2{font-size:1.5rem}.collhead p{color:var(--mut);font-size:.9rem;margin-top:4px}
+.card.seen .sn{background:#1f8a4c;border-color:#1f8a4c}
+.card.seen h3,.card.seen .dr{opacity:.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;padding:90px 4% 40px}
+.grid .card{flex:none;width:100%;height:auto;aspect-ratio:2/3}
+.empty{padding:140px 4%;text-align:center;color:var(--mut);font-size:1.1rem}
+/* MODAL */
+.ov{position:fixed;inset:0;background:#000c;z-index:100;display:none;padding:20px;overflow-y:auto}
+.ov>*{margin:auto}
+.ov.show{display:flex}
+.modal{background:var(--panel);width:min(760px,100%);border-radius:10px;overflow:hidden;box-shadow:0 20px 80px #000;animation:pop .25s}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.mh{height:250px;position:relative;display:flex;align-items:flex-end;gap:18px;padding:26px 26px 18px;background-size:cover}
+.mh .gico{position:absolute;right:24px;top:16px;font-size:6rem;opacity:.18;line-height:1;pointer-events:none}
+.mpo{position:relative;z-index:2;flex:none;width:112px;aspect-ratio:2/3;margin-bottom:-58px;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px #000c;border:2px solid #fff2;display:grid;place-items:center;font-weight:900;font-size:3.4rem;text-shadow:0 2px 10px #000a}
+.mpo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mpo small{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:.7rem;font-weight:700;opacity:.85}
+.mh::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--panel),transparent 70%)}
+.mh h2{position:relative;font-size:2.2rem;line-height:1.05;text-shadow:0 3px 20px #000;margin-bottom:6px}
+.x{position:absolute;top:14px;right:14px;z-index:3;width:36px;height:36px;border-radius:50%;background:#000a;font-size:1.2rem}
+.mb{padding:6px 26px 28px}
+.mb .meta{margin:10px 0 14px;padding-left:130px;min-height:50px;align-items:flex-start}
+.mb p{line-height:1.6;color:#ddd;margin-bottom:18px}
+.pill{display:inline-block;background:#fff1;padding:4px 12px;border-radius:20px;font-size:.8rem;margin-right:6px;color:#ddd}
+.more h4{margin:22px 0 10px;font-size:1rem}
+.mrow{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:thin}
+.mc{flex:0 0 96px;cursor:pointer;transition:transform .2s}
+.mc:hover{transform:translateY(-3px)}
+.mc .mp{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;display:grid;place-items:center;font-weight:900;font-size:1.8rem;border:1px solid #fff2}
+.mc .mp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mc.sn .mp{filter:grayscale(1) brightness(.82)}
+.mc span{display:block;font-size:.72rem;margin-top:5px;line-height:1.25;color:#ddd}
+.mc small{display:block;font-size:.65rem;color:var(--mut)}
+.acbtn{background:var(--red);padding:7px 16px;border-radius:4px;font-weight:700;font-size:.88rem}
+.acbtn.o{background:#fff1;border:1px solid #fff4}
+.who{display:flex;align-items:center;gap:9px;cursor:pointer;margin-right:4px}
+.who .nm{display:flex;flex-direction:column;line-height:1.15;font-size:.88rem;color:#eee}
+.who .nm small{font-size:.7rem;color:#f5c518;font-style:italic;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av{width:34px;height:34px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#b20710,#4a0408);display:grid;place-items:center;font-weight:800;color:#fff;flex:none;overflow:hidden;border:2px solid #fff3}
+.av.big{width:132px;height:132px;font-size:3rem;border-width:3px;border-color:#e50914}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+/* izlediklerim görünümü: izlenen = renkli, izlenmeyen = gri */
+.seenview .card .po{filter:grayscale(1) brightness(.8)}
+.seenview .card.seen .po{filter:none}
+.seenview .card:not(.seen):not(:has(.po)){filter:grayscale(1) brightness(.85)}
+.seenview .card.seen:not(:has(.po)){filter:none}
+.seenview .card.seen h3,.seenview .card.seen .dr{opacity:1}
+/* rozet */
+.bdg{--h:0;width:var(--s,84px);aspect-ratio:1/1.12;position:relative;display:grid;place-items:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(160deg,hsl(var(--h) 90% 62%),hsl(var(--h) 80% 28%) 55%,hsl(var(--h) 70% 14%))}
+.bdg::before{content:"";position:absolute;inset:5%;clip-path:inherit;background:radial-gradient(circle at 35% 25%,hsl(var(--h) 70% 36%),hsl(var(--h) 75% 10%))}
+.bdg span{position:relative;font-size:calc(var(--s,84px)*.46);filter:drop-shadow(0 2px 4px #000a);line-height:1}
+.bdg::after{content:"";position:absolute;inset:0;clip-path:inherit;background:linear-gradient(115deg,transparent 35%,#fff5 48%,transparent 60%);background-size:250% 100%;background-position:120% 0;animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%,60%{background-position:130% 0}100%{background-position:-30% 0}}
+.bdg span svg{width:calc(var(--s,84px)*.74);height:auto;display:block;filter:drop-shadow(0 2px 3px #000a)}
+.bdg.lock{filter:grayscale(1) brightness(.45);opacity:.8}
+.bdg.lock::after{display:none}
+.bdg.mini{--s:30px}
+.bdgcard{width:150px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:10px;background:#16161b;border:1px solid #fff1}
+.bdgcard b{font-size:.88rem;line-height:1.2}.bdgcard small{color:var(--mut);font-size:.72rem;line-height:1.25}
+.bdgcard.lk{opacity:.75}
+.bgrid{display:flex;flex-wrap:wrap;gap:12px;padding:16px 4% 0}
+.rbdg{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--mut);margin-left:4%;margin-bottom:2px}
+.rbdg.got{color:#f5c518}
+/* rozet kutlaması */
+.award{position:fixed;inset:0;z-index:150;background:radial-gradient(circle at 50% 40%,#000d,#000f);display:none;place-items:center;padding:20px;text-align:center}
+.award.show{display:grid;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0}}
+.award .box{max-width:380px}
+.award .bdg{--s:170px;margin:0 auto 18px;animation:abdg 1s cubic-bezier(.2,1.4,.3,1) both,glow 2.2s ease-in-out infinite 1s;filter:drop-shadow(0 0 28px hsl(var(--h) 90% 55%))}
+@keyframes abdg{from{transform:scale(.2) rotate(-200deg);opacity:0}}
+@keyframes glow{50%{filter:drop-shadow(0 0 48px hsl(var(--h) 100% 60%))}}
+.award h3{font-size:.85rem;letter-spacing:4px;color:#f5c518;margin-bottom:6px}
+.award h2{font-size:1.9rem;margin-bottom:8px}
+.award p{color:#ccc;line-height:1.5;margin-bottom:20px}
+.award .btn{margin:4px}
+/* profil */
+.prof{padding:120px 4% 10px;display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.prof .info{flex:1;min-width:240px}
+.prof h1{font-size:2.2rem;line-height:1.1}
+.prof .lk{color:#f5c518;font-style:italic;font-size:1.15rem;margin:4px 0 12px;min-height:1.4em}
+.stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:6px}
+.stats div{display:flex;flex-direction:column}.stats b{font-size:1.5rem}.stats span{font-size:.78rem;color:var(--mut)}
+.pedit{padding:0 4%;display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.pedit input[type=text]{background:#0008;border:1px solid #fff3;border-radius:5px;color:#fff;padding:9px 12px;font:inherit;width:min(280px,100%)}
+.pst{font-size:.88rem;font-weight:600}.pst.ok{color:#4ade80}.pst.err{color:#ff6b6b}
+.pedit .btn{margin:0;padding:9px 18px;font-size:.9rem}
+.sec{padding:26px 4% 0}.sec h2{font-size:1.3rem}.sec h2 small{color:var(--mut);font-weight:400;font-size:.8rem;margin-left:8px}
+.au{width:min(400px,100%);background:var(--panel);border-radius:10px;padding:28px;box-shadow:0 20px 80px #000;animation:pop .25s;position:relative}
+#acc{display:flex;gap:8px;align-items:center}
+#auth{z-index:120}
+.rules{font-size:.78rem;color:var(--mut);margin:-2px 0 10px;line-height:1.55}
+.rules div::before{content:"○ ";color:#777}
+.rules .ok{color:#4ade80}.rules .ok::before{content:"✓ ";color:#4ade80}
+.au .link{color:#fff;text-decoration:underline;font-size:.85rem;cursor:pointer;display:inline-block;margin-top:4px}
+.au .okbox{text-align:center;padding:14px 0 4px;line-height:1.6}
+.au .okbox .big{font-size:2.6rem}
+.au .rs{margin-top:10px;padding-top:10px;border-top:1px solid #fff2}
+.au h2{margin-bottom:6px;color:var(--red);letter-spacing:2px}
+.au .tabs{display:flex;gap:8px;margin:14px 0}
+.au .tabs button{flex:1;padding:9px;border-radius:5px;background:#fff1;font-weight:600}
+.au .tabs button.on{background:var(--red)}
+.au input{width:100%;padding:11px 12px;margin-bottom:10px;border-radius:5px;border:1px solid #fff3;background:#0008;color:#fff;font:inherit}
+.au .go{width:100%;padding:12px;background:var(--red);border-radius:5px;font-weight:700;margin-top:4px}
+.au .err{color:#ff6b6b;font-size:.85rem;min-height:1.2em;margin-bottom:6px}
+.au .note{color:var(--mut);font-size:.78rem;margin-top:12px;line-height:1.4}
+/* ---- uygulama / telefon ---- */
+nav{padding-top:calc(14px + env(safe-area-inset-top))}
+.tabbar{display:none}
+.install{display:none;position:fixed;left:10px;right:10px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:70;background:#1c1c22;border:1px solid #fff2;border-radius:12px;padding:12px 14px;gap:10px;align-items:center;font-size:.86rem;line-height:1.35;box-shadow:0 10px 40px #000a}
+.install.show{display:flex}
+.install span{flex:1}.install .btn{margin:0;padding:8px 14px;font-size:.85rem}
+@media(hover:none){.card .sn,.card .fav{opacity:1}.arr{display:none}.card:hover{transform:none;box-shadow:none}.card{padding-bottom:40px}.card .sn,.card .fav{bottom:8px}}
+@media(max-width:800px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  nav{flex-wrap:wrap;gap:8px 12px;padding:calc(10px + env(safe-area-inset-top)) 14px 8px}
+  nav a,.cnt{display:none}
+  .logo{font-size:1.15rem;letter-spacing:2px}.logo img{width:26px;height:26px}
+  .search{order:3;width:100%}.search input{width:100%}
+  #acc .lo{display:none}.who .nm{display:none}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0d0d10f2;backdrop-filter:blur(10px);border-top:1px solid #fff1;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.64rem;color:var(--mut);padding:4px 0}
+  .tabbar button b{font-size:1.25rem;line-height:1;font-weight:400}
+  .tabbar button.on{color:#fff}.tabbar button.on b{filter:drop-shadow(0 0 6px var(--red))}
+  .hero{height:72vh;min-height:430px;padding-bottom:7vh}
+  .hero h1{font-size:2.1rem}.hero p{font-size:.95rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .btn{padding:10px 16px;font-size:.9rem;margin-bottom:6px;margin-right:6px}
+  .chips{padding:8px 14px 4px}.chip{font-size:.76rem;padding:5px 11px}
+  .row h2,.row .desc,.rbdg{padding-left:14px}.rbdg{margin-left:0}.prog{margin-left:14px}
+  .track{padding-left:14px;padding-right:14px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px;padding:70px 12px 30px}
+  .collhead,.sec{padding-left:14px;padding-right:14px}.bgrid{padding-left:14px;padding-right:14px;gap:10px}.bdgcard{width:calc(50% - 5px)}
+  .ov{padding:8px}
+  .mh{height:210px;padding:18px 16px 14px}.mh h2{font-size:1.45rem}.mpo{width:92px;margin-bottom:-48px}
+  .mb{padding:6px 16px 24px}.mb .meta{padding-left:108px;min-height:44px}
+  .prof{padding:96px 14px 6px;gap:16px}.prof h1{font-size:1.6rem}.av.big{width:96px;height:96px;font-size:2.2rem}
+  .pedit{padding:0 14px}
+  footer{padding:30px 14px 20px}
+  .award .bdg{--s:140px}
+}
+footer{padding:50px 4% 60px;text-align:center;color:#666;font-size:.8rem}
+@media(max-width:700px){nav a{display:none}.search input{width:100px}.card{--cw:140px}.hero{height:80vh}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="logo" onclick="go('')"><img src="icons/favicon.svg" alt="" width="32" height="32">HORRORMAX</div>
+  <a onclick="go('')">Ana Sayfa</a>
+  <a onclick="go('fav')">Listem</a>
+  <a onclick="go('seen')">İzlediklerim</a>
+  <a onclick="go('top')">En Yüksek Puanlılar</a>
+  <div class="sp"></div>
+  <span class="cnt" id="cnt"></span>
+  <span id="acc"></span>
+  <div class="search">🔍<input id="q" placeholder="Film, yönetmen ara…" autocomplete="off"></div>
+</nav>
+
+<header class="hero" id="hero"><div class="bd" id="hbd"></div><div class="big" id="hbig"></div><img class="hp" id="hpo" alt=""><div class="in" id="hin"></div></header>
+<div class="chips" id="chips"></div>
+<main id="main"></main>
+<div class="ov" id="auth"><form class="au" id="af" autocomplete="on"><button type="button" class="x" onclick="closeAuth()">✕</button><h2>HORRORMAX</h2><div class="note" id="amsg" style="margin:0"></div>
+<div class="tabs"><button type="button" id="tl" onclick="authTab(0)">Giriş Yap</button><button type="button" id="tr" onclick="authTab(1)">Kayıt Ol</button></div>
+<div id="aform">
+<input id="au" placeholder="Kullanıcı adı" autocomplete="nickname" maxlength="20" style="display:none">
+<input id="ae" type="email" placeholder="E-posta adresi" autocomplete="email" maxlength="254" inputmode="email">
+<input id="ap" type="password" placeholder="Şifre" autocomplete="current-password" maxlength="64">
+<input id="ap2" type="password" placeholder="Şifre (tekrar)" autocomplete="new-password" maxlength="64" style="display:none">
+<input id="ad" placeholder="Davet kodu" autocomplete="off" autocapitalize="off" maxlength="60" style="display:none">
+<div class="rules" id="arules" style="display:none"></div>
+<div class="err" id="aerr"></div><button class="go" id="ago">Giriş Yap</button>
+<div class="note" id="anote">İzlediklerin ve listen sadece senin hesabına özeldir. </div></div>
+</form></div>
+<div class="tabbar" id="tabbar">
+  <button data-v="" onclick="go('')"><b>🏠</b>Ana Sayfa</button>
+  <button data-v="search" onclick="openSearch()"><b>🔍</b>Ara</button>
+  <button data-v="fav" onclick="go('fav')"><b>❤️</b>Listem</button>
+  <button data-v="seen" onclick="go('seen')"><b>👁</b>İzlediklerim</button>
+  <button data-v="profile" onclick="go('profile')"><b>👤</b>Profil</button>
+</div>
+<div class="award" id="award"></div>
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<footer>HORRORMAX · Sadece korku. Kâr amacı gütmeyen bir portfolyo projesidir. İzlemeden önce ışıkları kapatma. 🩸<br>IMDb puanları yaklaşık değerlerdir.<br>Kamu malı afişler: Wikimedia Commons. Sahne görselleri: TMDB. Bu ürün TMDB API'sini kullanır ancak TMDB tarafından onaylanmamıştır.</footer>
+
+<script src="veri/posters.js"></script>
+<script src="veri/aciklamalar.js"></script>
+<script src="veri/ekfilmler.js"></script>
+<script src="veri/seriler.js"></script>
+<script src="veri/backdrops.js"></script>
+<script src="veri/rozetler.js"></script>
+<script src="veri/rozet-cizimler.js"></script>
+<script>
+/* ---------- VERİ ---------- */
+const G=[
+{id:"slasher",name:"Slasher",ico:"🔪",hue:355,d:"Maskeli katiller, kan ve kaçış. Klasik bıçaklı katliam.",f:[
+["Halloween",1978,7.7,"John Carpenter","Michael Myers, akıl hastanesinden kaçıp Haddonfield'a döner."],
+["A Nightmare on Elm Street",1984,7.4,"Wes Craven","Freddy Krueger, gençlerin rüyalarında onları avlar."],
+["Friday the 13th",1980,6.4,"Sean S. Cunningham","Crystal Lake kampında bir katil danışmanları tek tek öldürür."],
+["Scream",1996,7.4,"Wes Craven","Korku filmi kurallarını bilen bir katil, Woodsboro'yu terörize eder."],
+["The Texas Chain Saw Massacre",1974,7.4,"Tobe Hooper","Teksas'ta yolunu kaybeden gençler, testereli bir ailenin eline düşer."],
+["Black Christmas",1974,7.0,"Bob Clark","Yılbaşında bir kız yurdu, telefonda tehdit eden bir katille yüzleşir."],
+["Happy Death Day",2017,6.6,"Christopher Landon","Bir kız kendi ölümünü tekrar tekrar yaşar ve katili bulmak zorundadır."],
+["X",2022,6.6,"Ti West","Bir porno çekimi ekibi, çiftlik sahibi yaşlı çiftin hedefi olur."]]},
+{id:"hayalet",name:"Hayalet & Doğaüstü",ico:"👻",hue:215,d:"Perili evler, huzursuz ruhlar ve görünmeyen varlıklar.",f:[
+["The Conjuring",2013,7.5,"James Wan","Warren çifti, perili bir çiftlik evindeki karanlık güçle savaşır."],
+["Insidious",2010,6.8,"James Wan","Komadaki bir çocuğun bedenine ruhlar âleminden varlıklar musallat olur."],
+["The Others",2001,7.6,"Alejandro Amenábar","Işığa duyarlı çocuklarıyla yaşayan bir anne, evde başkalarının varlığını sezer."],
+["Poltergeist",1982,7.3,"Tobe Hooper","Banliyö evindeki ruhlar, küçük kızı başka bir boyuta çeker."],
+["The Sixth Sense",1999,8.2,"M. Night Shyamalan","Ölüleri gören bir çocuk ve ona yardım etmeye çalışan psikolog."],
+["Sinister",2012,6.8,"Scott Derrickson","Bir yazar, bodrumda bulduğu 8mm filmlerle kadim bir kötülüğü uyandırır."],
+["The Haunting",1963,7.5,"Robert Wise","Bir araştırmacı ekip, Hill House'un lanetini araştırır."],
+["Smile",2022,6.5,"Parker Finn","Gülümseyen hayaletler, kurbanlarını ölüme sürükleyen bir lanet taşır."]]},
+{id:"seytani",name:"Şeytani & Okült",ico:"😈",hue:15,d:"Şeytan çıkarma, ayinler, lanetli çocuklar ve karanlık tarikatlar.",f:[
+["The Exorcist",1973,8.1,"William Friedkin","Genç bir kıza giren şeytanı çıkarmak için iki rahip savaşır."],
+["The Omen",1976,7.5,"Richard Donner","Bir diplomat, oğlunun Deccal olduğundan şüphelenmeye başlar."],
+["Rosemary's Baby",1968,8.0,"Roman Polanski","Hamile bir kadın, komşularının karanlık bir plan kurduğunu fark eder."],
+["Hereditary",2018,7.3,"Ari Aster","Bir ailenin yasında, nesillerdir süren korkunç bir sır açığa çıkar."],
+["The Exorcism of Emily Rose",2005,6.7,"Scott Derrickson","Şeytan çıkarma sonrası ölen kızın rahibi mahkemede yargılanır."],
+["Talk to Me",2022,7.1,"Danny & Michael Philippou","Gençler, ruhlarla temas kuran lanetli bir eli oyuncak yapar."],
+["Suspiria",1977,7.3,"Dario Argento","Bir bale akademisi, cadıların yönettiği bir yuvaya dönüşür."],
+["The Nun II",2023,5.6,"Michael Chaves","Şeytani rahibe Valak, bu kez Fransa'da yeniden ortaya çıkar."]]},
+{id:"zombi",name:"Zombi & Salgın",ico:"🧟",hue:100,d:"Yürüyen ölüler ve dünyanın sonunu getiren enfeksiyonlar.",f:[
+["Night of the Living Dead",1968,7.8,"George A. Romero","Bir çiftlik evine sığınanlar, mezarından kalkan ölülere karşı hayatta kalmaya çalışır."],
+["Dawn of the Dead",1978,7.8,"George A. Romero","Hayatta kalanlar zombi istilasında bir alışveriş merkezine kapanır."],
+["Train to Busan",2016,7.6,"Yeon Sang-ho","Zombi salgını sırasında bir hızlı trende hayatta kalma mücadelesi."],
+["28 Days Later",2002,7.5,"Danny Boyle","Öfke virüsü İngiltere'yi yok ettikten sonra uyanan bir adamın hikâyesi."],
+["28 Weeks Later",2007,6.8,"Juan Carlos Fresnadillo","Karantina altındaki Londra'da virüs yeniden yayılır."],
+["Return of the Living Dead",1985,7.2,"Dan O'Bannon","Gizli bir askeri kimyasal, ölüleri beyin yiyen zombilere dönüştürür."],
+["Day of the Dead",1985,6.9,"George A. Romero","Yeraltı sığınağındaki bilim insanları ve askerler arasında gerilim artar."],
+["World War Z",2013,7.0,"Marc Forster","Eski bir BM görevlisi, küresel zombi salgınının kaynağını arar."]]},
+{id:"vampir",name:"Vampir & Kurt Adam",ico:"🧛",hue:340,d:"Kan emiciler, ay ışığında dönüşenler ve ölümsüz yaratıklar.",f:[
+["Let the Right One In",2008,7.8,"Tomas Alfredson","Yalnız bir çocuk, komşusu genç vampir kızla tuhaf bir dostluk kurar."],
+["Interview with the Vampire",1994,7.6,"Neil Jordan","Bir vampir, yüzyıllık yaşamını bir muhabire anlatır."],
+["Bram Stoker's Dracula",1992,7.4,"Francis Ford Coppola","Kont Dracula'nın ölümsüz aşkı ve Londra'ya yolculuğu."],
+["An American Werewolf in London",1981,7.5,"John Landis","Bir Amerikalı turist, kurt adam tarafından ısırılır."],
+["The Howling",1981,6.5,"Joe Dante","Bir muhabir, tuhaf bir inzivâ topluluğunda kurt adamları keşfeder."],
+["Near Dark",1987,7.0,"Kathryn Bigelow","Bir çiftçi çocuğu, göçebe vampir çetesine katılmak zorunda kalır."],
+["Nosferatu",2024,6.6,"Robert Eggers","Genç bir kadın, onu kıskanç bir kâbus gibi takip eden Kont Orlok'tan kaçamaz."],
+["Fright Night",1985,7.1,"Tom Holland","Bir genç, yeni komşusunun vampir olduğunu herkese kanıtlamaya çalışır."]]},
+{id:"psikolojik",name:"Psikolojik Korku",ico:"🧠",hue:270,d:"Asıl canavar zihnin içinde. Gerçek ile hayal birbirine karışır.",f:[
+["The Shining",1980,8.4,"Stanley Kubrick","Issız bir otelde bekçilik yapan yazar yavaş yavaş delirir."],
+["Psycho",1960,8.5,"Alfred Hitchcock","Bir kaçak kadın, Bates Motel'in tuhaf sahibiyle karşılaşır."],
+["The Silence of the Lambs",1991,8.6,"Jonathan Demme","FBI stajyeri, seri katili yakalamak için Hannibal Lecter'dan yardım ister."],
+["Black Swan",2010,8.0,"Darren Aronofsky","Bir balerin mükemmellik takıntısıyla gerçeklik algısını kaybeder."],
+["Repulsion",1965,7.6,"Roman Polanski","Yalnız kalan genç bir kadın, daireside çıldırmaya başlar."],
+["Jacob's Ladder",1990,7.4,"Adrian Lyne","Vietnam gazisi, gördüğü şeylerin gerçek mi halüsinasyon mu olduğunu çözemez."],
+["The Babadook",2014,6.8,"Jennifer Kent","Yas tutan bir anne ve oğlu, bir çocuk kitabından çıkan varlıkla savaşır."],
+["Black Phone",2021,6.9,"Scott Derrickson","Kaçırılan bir çocuk, bodrumdaki bozuk telefondan ölü kurbanlarla konuşur."]]},
+{id:"foundfootage",name:"Found Footage",ico:"📹",hue:50,d:"Kamera kaydı gibi çekilmiş, gerçekmiş hissi veren filmler.",f:[
+["The Blair Witch Project",1999,6.5,"Daniel Myrick, Eduardo Sánchez","Ormanda kaybolan üç öğrencinin bulunan görüntüleri."],
+["Paranormal Activity",2007,6.3,"Oren Peli","Bir çift, evlerindeki tuhaf olayları gece kameralarıyla kaydeder."],
+["[REC]",2007,7.4,"Jaume Balagueró, Paco Plaza","Bir TV ekibi, karantinaya alınan apartmanda enfeksiyonla karşılaşır."],
+["Cloverfield",2008,7.0,"Matt Reeves","New York'a saldıran dev bir canavar, bir parti kamerasıyla kaydedilir."],
+["Lake Mungo",2008,6.2,"Joel Anderson","Boğulan bir kızın ailesi, evde tuhaf görüntüler fark eder."],
+["Grave Encounters",2011,6.1,"The Vicious Brothers","Bir hayalet avı ekibi, terk edilmiş hastanede mahsur kalır."],
+["Host",2020,6.5,"Rob Savage","Pandemide Zoom seansı yapan arkadaşlar, ruhları yanlışlıkla çağırır."],
+["V/H/S",2012,5.8,"Çeşitli yönetmenler","Bir grup hırsız, gizemli video kasetleri izlemeye başlar."]]},
+{id:"body",name:"Body Horror",ico:"🫀",hue:0,d:"Beden mutasyona uğrar, dönüşür ve kontrolden çıkar.",f:[
+["The Thing",1982,8.2,"John Carpenter","Antarktika'da, insanları taklit eden uzaylı bir yaratık."],
+["The Fly",1986,7.6,"David Cronenberg","Bir bilim insanı, deneyinde bir sinekle DNA'sını birleştirir."],
+["Videodrome",1983,7.2,"David Cronenberg","Bir TV yöneticisi, vücudu değiştiren gizemli bir yayınla karşılaşır."],
+["Raw",2016,7.0,"Julia Ducournau","Vejetaryen bir veteriner öğrencisi, et tadına karşı koyulmaz bir açlık duyar."],
+["Titane",2021,6.5,"Julia Ducournau","Bir kadın ve araba arasındaki tuhaf ilişki korkunç sonuçlar doğurur."],
+["The Substance",2024,7.3,"Coralie Fargeat","Yaşlanan bir yıldız, kendi daha genç kopyasını yaratan bir madde kullanır."],
+["Possessor",2020,6.5,"Brandon Cronenberg","Bir suikastçı, başkalarının bedenine girerek cinayet işler."],
+["Society",1989,6.6,"Brian Yuzna","Zengin bir gencin ailesi, korkunç bir sır saklar."]]},
+{id:"folk",name:"Folk Horror",ico:"🌾",hue:35,d:"Kırsal kesim, pagan ritüeller ve izole topluluklar.",f:[
+["The Wicker Man",1973,7.5,"Robin Hardy","Kayıp bir kızı arayan polis, tuhaf bir adada pagan ayinlerle karşılaşır."],
+["Midsommar",2019,7.1,"Ari Aster","Bir grup Amerikalı, İsveç'teki yaz festivalinde kâbus yaşar."],
+["The Witch",2015,6.9,"Robert Eggers","1630'larda yalnız yaşayan bir ailenin başına cadı laneti gelir."],
+["Witchfinder General",1968,7.0,"Michael Reeves","İç savaş döneminde sahte cadı avcısı köyleri terörize eder."],
+["Kill List",2011,6.3,"Ben Wheatley","Eski askerler, korkunç bir iş için bir kâğıt listeyi takip eder."],
+["The Ritual",2017,6.2,"David Bruckner","Arkadaşlar İsveç ormanında karanlık bir varlıkla karşılaşır."],
+["Apostle",2018,6.2,"Gareth Evans","Bir adam, bir tarikatın elinde esir kalan kız kardeşini kurtarmaya çalışır."],
+["Lamb",2021,6.3,"Valdimar Jóhannsson","Izlandalı çiftçiler, kuzularından birinin tuhaf bir yapıda olduğunu görür."]]},
+{id:"gore",name:"Gore & Aşırı",ico:"🩸",hue:350,d:"Sınır tanımayan şiddet ve zayıf kalpler için değil.",f:[
+["Saw",2004,7.6,"James Wan","İki adam, bir tuzakta zehirli bir oyunu çözmek zorundadır."],
+["Evil Dead",1981,7.4,"Sam Raimi","Ormanda bir kulübede bulunan kitap, ölü ruhlarını uyandırır."],
+["Hostel",2005,5.9,"Eli Roth","Gezgin gençler, Slovakya'da insan avlayan bir örgütün eline düşer."],
+["Martyrs",2008,7.0,"Pascal Laugier","İntikam arayışı, derin ve acımasız bir sırra uzanır."],
+["Terrifier 2",2022,6.1,"Damien Leone","Art the Clown, Cadılar Bayramı'nda yeniden kana susar."],
+["Inside",2007,6.5,"Alexandre Bustillo, Julien Maury","Hamile bir kadın, evine giren gizemli bir kadınla savaşır."],
+["High Tension",2003,6.7,"Alexandre Aja","Bir kız, arkadaşının ailesini katleden manyaktan kaçar."],
+["The Hills Have Eyes",1977,6.4,"Wes Craven","Çölde mahsur kalan aile, mutant bir kabilenin hedefi olur."]]},
+{id:"komedi",name:"Korku-Komedi",ico:"🤡",hue:150,d:"Hem güldüren hem de ürperten karışım.",f:[
+["Shaun of the Dead",2004,7.9,"Edgar Wright","Tembel bir adam, zombi istilasında sevdiklerini kurtarmak zorundadır."],
+["Evil Dead II",1987,7.8,"Sam Raimi","Ash, kulübede ölü ruhlarıyla başa çıkarken çıldırır."],
+["What We Do in the Shadows",2014,7.6,"Taika Waititi, Jemaine Clement","Yeni Zelanda'da bir evi paylaşan vampirlerin belgeseli."],
+["The Cabin in the Woods",2011,7.0,"Drew Goddard","Bir grup genç, kulübede korku filmi klişelerinin içine düşer."],
+["Zombieland",2009,7.5,"Ruben Fleischer","Zombi apokalipsinde dört yabancı, birlikte hayatta kalır."],
+["Tucker & Dale vs Evil",2010,7.5,"Eli Craig","Köylü iki adam, yanlış anlaşılma yüzünden katil sanılır."],
+["Ready or Not",2019,6.8,"Matt Bettinelli-Olpin, Tyler Gillett","Düğün gecesi, gelin ölümcül bir saklambaçta hayatta kalmaya çalışır."],
+["Gremlins",1984,7.3,"Joe Dante","Sevimli bir yaratığın kuralları çiğnenince kaos başlar."],
+["Beetlejuice",1988,7.5,"Tim Burton","Ölen bir çift, evlerini ele geçiren aileyi kovmak için bir bio-exorcist tutar."]]},
+{id:"yaratik",name:"Yaratık & Canavar",ico:"🦑",hue:175,d:"Denizden, yerin altından ve uzaydan gelen ürkütücü yaratıklar.",f:[
+["Alien",1979,8.5,"Ridley Scott","Uzay gemisi mürettebatı, gemiye sızan ölümcül bir yaratıkla savaşır."],
+["Jaws",1975,8.1,"Steven Spielberg","Bir sahil kasabasında insanları avlayan dev bir köpekbalığı."],
+["The Descent",2005,7.2,"Neil Marshall","Kadın mağaracılar, yeraltında insan yiyen yaratıklarla karşılaşır."],
+["A Quiet Place",2018,7.5,"John Krasinski","Sesle avlanan canavarlardan kaçan bir aile, sessizce hayatta kalır."],
+["The Host",2006,7.1,"Bong Joon-ho","Han Nehri'nden çıkan canavar, bir kızı kaçırır."],
+["The Mist",2007,7.1,"Frank Darabont","Bir marketteki insanlar, sisten gelen yaratıklardan saklanır."],
+["Tremors",1990,7.1,"Ron Underwood","Çöl kasabasında yeraltından çıkan dev solucanlar saldırır."],
+["Them!",1954,7.2,"Gordon Douglas","Nükleer testler sonrası dev karıncalar ortaya çıkar."]]},
+{id:"asya",name:"Asya Korkusu",ico:"🏮",hue:5,d:"Uzun saçlı hayaletler, lanetler ve soğuk bir atmosfer.",f:[
+["Ringu",1998,7.2,"Hideo Nakata","Bir video kaseti izleyenler yedi gün içinde ölür."],
+["Ju-On: The Grudge",2002,6.7,"Takashi Shimizu","Lanetli bir eve giren herkes öfkeli bir ruhun hedefi olur."],
+["Audition",1999,7.1,"Takashi Miike","Bir dul, sahte bir seçme yoluyla eş bulmaya çalışır."],
+["A Tale of Two Sisters",2003,7.1,"Kim Jee-woon","İki kız kardeş, üvey annelerinin evinde tuhaf olaylar yaşar."],
+["Pulse (Kairo)",2001,7.2,"Kiyoshi Kurosawa","İnternet üzerinden gelen hayaletler ölüleri dünyaya sızdırır."],
+["Dark Water",2002,6.7,"Hideo Nakata","Bir anne, yeni dairesindeki sızıntının peşine düşer."],
+["The Wailing",2016,7.4,"Na Hong-jin","Bir köyde tuhaf bir hastalık ve yabancı Japon adamın şüpheleri."],
+["Shutter",2004,7.1,"Banjong Pisanthanakun, Parkpoom Wongpoom","Fotoğraflarda beliren hayalet, genç bir çifti takip eder."],
+["Onibaba",1964,7.7,"Kaneto Shindo","Savaş döneminde iki kadın, askerleri öldürüp soyar."]]},
+{id:"kozmik",name:"Kozmik & Bilimkurgu",ico:"🛸",hue:190,d:"Uzayın ve bilinmezin dehşeti.",f:[
+["Event Horizon",1997,6.6,"Paul W.S. Anderson","Kayıp bir uzay gemisinin kurtarma ekibi cehennemi keşfeder."],
+["Annihilation",2018,6.8,"Alex Garland","Bir biyolog, mutasyona uğramış bir bölgeye girer."],
+["In the Mouth of Madness",1994,7.1,"John Carpenter","Bir sigorta müfettişi, kayıp bir yazarın kitaplarının gerçeğe dönüştüğünü görür."],
+["Color Out of Space",2019,6.1,"Richard Stanley","Bir çiftliğe düşen göktaşı, ailenin zihnini ve bedenini bozar."],
+["Pontypool",2008,6.4,"Bruce McDonald","Bir radyo istasyonunda, kelimeler yoluyla bulaşan bir virüs yayılır."],
+["Alien: Romulus",2024,7.2,"Fede Álvarez","Genç kolonistler, terk edilmiş bir istasyonda ksenomorflarla karşılaşır."],
+["Sputnik",2020,6.4,"Egor Abramenko","Bir kozmonotun içine yerleşen yaratığı inceleyen bilim insanı."]]},
+{id:"survival",name:"Hayatta Kalma & Ev Baskını",ico:"🔦",hue:225,d:"Yabancılar, kapalı alanlar ve gerçekçi tehditler.",f:[
+["Get Out",2017,7.7,"Jordan Peele","Siyah bir adam, sevgilisinin ailesini ziyarete gittiğinde korkunç bir sır keşfeder."],
+["Us",2019,6.8,"Jordan Peele","Bir aile, kendi birebir kopyalarının saldırısına uğrar."],
+["The Strangers",2008,6.2,"Bryan Bertino","Maskeli üç kişi, çifti sebepsiz yere terörize eder."],
+["Funny Games",1997,7.6,"Michael Haneke","İki genç, bir ailenin tatil evinde zalim bir oyun oynar."],
+["Don't Breathe",2016,6.8,"Fede Álvarez","Hırsızlar, kör bir adamın evinde tehlikeli bir oyuna girer."],
+["Green Room",2015,7.0,"Jeremy Saulnier","Bir punk grubu, neo-Nazilerin kulübünde kapana kısılır."],
+["You're Next",2011,6.5,"Adam Wingard","Aile toplantısına maskeli saldırganlar baskın düzenler."],
+["10 Cloverfield Lane",2016,7.2,"Dan Trachtenberg","Bir kadın, bir sığınakta onu koruyan adama güvenip güvenmeyeceğini bilemez."],
+["Barbarian",2022,7.0,"Zach Cregger","Bir kiralık evde, iki yabancı bodrumdaki gizemli tünelleri keşfeder."]]},
+{id:"gotik",name:"Gotik Klasikler",ico:"🦇",hue:260,d:"Sessiz sinemadan Universal canavarlarına, korkunun kökleri.",f:[
+["Nosferatu",1922,7.9,"F.W. Murnau","Kont Orlok, Wisborg'a ölüm ve veba getirir."],
+["The Cabinet of Dr. Caligari",1920,8.0,"Robert Wiene","Bir hipnozcu, uyurgezeri cinayet işlemek için kullanır."],
+["Dracula",1931,7.4,"Tod Browning","Kont Dracula, Londra'da yeni kurbanlar arar."],
+["Frankenstein",1931,7.8,"James Whale","Bilim insanı, cesetlerden yaptığı yaratığa can verir."],
+["Bride of Frankenstein",1935,7.8,"James Whale","Yaratık, kendisine bir eş yapılmasını talep eder."],
+["The Invisible Man",1933,7.7,"James Whale","Görünmez olan bilim adamı, delirerek terör saçar."],
+["The Mummy",1932,7.1,"Karl Freund","Bir mumya, kayıp aşkını yeniden yaşatmak için uyanır."],
+["The Innocents",1961,7.8,"Jack Clayton","Bir mürebbiye, çocukların korktuğu hayaletleri görmeye başlar."],
+["Crimson Peak",2015,6.5,"Guillermo del Toro","Genç bir yazar, kasvetli bir malikânede ölü ruhlarla karşılaşır."]]}
+];
+
+/* ek filmleri birleştir */
+G.forEach(g=>((window.EXTRA||{})[g.id]||[]).forEach(f=>g.f.push(f)));
+/* düzleştir */
+const ALL=[];
+G.forEach(g=>g.f.forEach(a=>{const k=a[0]+"|"+a[1],D=window.DESCS||{};
+  ALL.push({t:a[0],y:a[1],r:a[2],d:a[3],s:D[k]?a[4]:a[4].split(/(?<=\.)\s/)[0],g:g.id,h:g.hue,id:ALL.length,
+    img:(window.POSTERS||{})[k],bd:(window.BACKDROPS||{})[k],l:D[k]||a[4]})}));
+const gName=id=>G.find(g=>g.id===id);
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const SHUF=shuffle(ALL);            // "Şans Eseri" sırası oturum boyunca sabit kalsın
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ---------- SUNUCU / HESAP DURUMU ---------- */
+let LOCAL=false,SB=false,sb=null;
+const CFG=window.APP_CONFIG||{};
+if(CFG.url&&CFG.anonKey&&!/BURAYA|YOUR_/i.test(CFG.url+CFG.anonKey)&&window.supabase){
+  sb=window.supabase.createClient(CFG.url,CFG.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:"hm-auth"}});
+  SB=true;
+}
+const CKEY="hm_cache";
+const cget=()=>{try{return JSON.parse(localStorage.getItem(CKEY)||"null")}catch(e){return null}};
+const cset=d=>{try{localStorage.setItem(CKEY,JSON.stringify(d))}catch(e){}};
+const toD=p=>({user:p.username,seen:p.seen||[],favs:p.favs||[],badges:p.badges||{},lakap:p.lakap||"",avatar:p.avatar?1:0,avatarData:p.avatar||""});
+function authMsg(e){
+  const m=String(e&&e.message||"").toLowerCase();
+  if(m.includes("invalid login"))return "E-posta ya da şifre hatalı.";
+  if(m.includes("already registered")||m.includes("already been registered"))return "Bu e-posta ile zaten bir hesap var.";
+  if(m.includes("davet"))return "Davet kodu yanlış.";
+  if(m.includes("duplicate")||m.includes("unique"))return "Bu kullanıcı adı alınmış, başka bir tane dene.";
+  if(m.includes("database error"))return "Davet kodu yanlış ya da bu kullanıcı adı alınmış.";
+  if(m.includes("rate limit")||m.includes("too many"))return "Çok fazla deneme. Biraz bekleyip tekrar dene.";
+  if(m.includes("fetch")||m.includes("network")||m.includes("failed to"))return "İnternet bağlantısı yok ya da sunucuya ulaşılamıyor.";
+  return (e&&e.message)||"Bir hata oluştu.";
+}
+async function sbSession(){const r=await sb.auth.getSession();return r.data&&r.data.session||null}
+async function sbProfile(uid){
+  const r=await sb.from("profiles").select("*").eq("id",uid).maybeSingle();
+  if(r.error)throw r.error;
+  if(r.data)return r.data;
+  const ins=await sb.from("profiles").insert({id:uid,username:"kullanici"}).select().single();
+  if(ins.error)throw ins.error;
+  return ins.data;
+}
+async function sbPush(uid,c){
+  const r=await sb.from("profiles").update({seen:c.seen||[],favs:c.favs||[],badges:c.badges||{},updated_at:new Date().toISOString()}).eq("id",uid);
+  if(r.error)throw r.error;
+}
+async function sbAPI(path,opt){
+  const b=opt.body?JSON.parse(opt.body):{},ok=d=>({ok:true,status:200,d}),fail=(t,s=400)=>({ok:false,status:s,d:{error:t}});
+  try{
+    if(path==="/api/me"){
+      const s=await sbSession();if(!s)return ok({user:null});
+      const c=cget();
+      try{
+        if(localStorage.getItem("hm_dirty")==="1"&&c&&c.user){await sbPush(s.user.id,c);localStorage.removeItem("hm_dirty")}
+        const d=toD(await Promise.race([sbProfile(s.user.id),new Promise((_,no)=>setTimeout(()=>no(new Error("failed to fetch: zaman aşımı")),4500))]));cset(d);return ok(d);
+      }catch(e){if(c&&c.user)return ok({...c,offline:true});throw e}
+    }
+    if(path==="/api/login"){
+      const r=await sb.auth.signInWithPassword({email:b.email,password:b.password});
+      if(r.error)return fail(authMsg(r.error),401);
+      const d=toD(await sbProfile(r.data.user.id));cset(d);return ok(d);
+    }
+    if(path==="/api/register"){
+      const r=await sb.auth.signUp({email:b.email,password:b.password,options:{data:{username:b.username,davet:b.davet}}});
+      if(r.error)return fail(authMsg(r.error));
+      if(!r.data.session)return fail("Hesap oluşturuldu ama e-posta onayı açık görünüyor. Supabase panelinde Authentication > Providers > Email > 'Confirm email' seçeneğini kapat (OKUBENI.md).",500);
+      const d=toD(await sbProfile(r.data.user.id));cset(d);return ok(d);
+    }
+    if(path==="/api/logout"){await sb.auth.signOut();try{localStorage.removeItem(CKEY);localStorage.removeItem("hm_dirty")}catch(e){}return ok({ok:true})}
+    const s=await sbSession();if(!s)return fail("Giriş gerekli.",401);
+    if(path==="/api/data"){await sbPush(s.user.id,b);return ok({ok:true,badges:b.badges||{}})}
+    if(path==="/api/profile"){
+      const lakap=String(b.lakap||"").replace(/[\u0000-\u001f<>]/g,"").replace(/\s+/g," ").trim().slice(0,30);
+      const r=await sb.from("profiles").update({lakap,updated_at:new Date().toISOString()}).eq("id",s.user.id);
+      if(r.error)throw r.error;return ok({ok:true,lakap});
+    }
+    if(path==="/api/avatar"){
+      const data=b.data===null?null:b.data;
+      const r=await sb.from("profiles").update({avatar:data,updated_at:new Date().toISOString()}).eq("id",s.user.id);
+      if(r.error)throw r.error;return ok({ok:true,avatar:data?Date.now():0,avatarData:data||""});
+    }
+    return ok({ok:true});
+  }catch(e){return{ok:false,status:0,d:{error:authMsg(e)}}}
+}
+const lget=()=>{try{return JSON.parse(localStorage.getItem("hm_local")||"{}")}catch(e){return {}}};
+const lset=o=>{try{localStorage.setItem("hm_local",JSON.stringify(o))}catch(e){}};
+async function localAPI(path,opt){
+  const b=opt.body?JSON.parse(opt.body):{},L=lget(),ok=d=>({ok:true,status:200,d});
+  if(path==="/api/data"){L.seen=b.seen||[];L.favs=b.favs||[];L.badges={...(b.badges||{}),...(L.badges||{})};lset(L);return ok({ok:true,badges:L.badges})}
+  if(path==="/api/profile"){L.lakap=String(b.lakap||"").replace(/[\u0000-\u001f<>]/g,"").replace(/\s+/g," ").trim().slice(0,30);lset(L);return ok({ok:true,lakap:L.lakap})}
+  if(path==="/api/avatar"){if(b.data===null){delete L.avatar;L.avatarV=0}else{L.avatar=b.data;L.avatarV=Date.now()}lset(L);return ok({ok:true,avatar:L.avatarV||0})}
+  return ok({ok:true});
+}
+async function API(path,opt={}){
+  if(SB)return sbAPI(path,opt);
+  if(LOCAL)return localAPI(path,opt);
+  try{
+    const r=await fetch(path,{credentials:"same-origin",...opt,headers:{"Content-Type":"application/json"}});
+    let d={};try{d=await r.json()}catch(e){}
+    return{ok:r.ok,status:r.status,d};
+  }catch(e){
+    return{ok:false,status:0,d:{error:"Sunucuya ulaşılamıyor. Siteyi baslat.bat ile aç (http://localhost:3000)."}};
+  }
+}
+let user=null,favs=[],seen=[],badges={},lakap="",avatarV=0,avatarData="";
+let view="",query="",sub="",hero=null,popKey=null;
+const key=m=>m.t+"|"+m.y;
+const isSeen=m=>seen.includes(key(m));
+const isFav=m=>favs.includes(key(m));
+let saveT;
+function persist(){
+  if(!user)return;
+  if(SB){cset({user,seen,favs,badges,lakap,avatar:avatarV,avatarData});try{localStorage.setItem("hm_dirty","1")}catch(e){}}
+  clearTimeout(saveT);
+  saveT=setTimeout(async()=>{
+    const r=await API("/api/data",{method:"PUT",body:JSON.stringify({seen,favs,badges})});
+    if(SB&&r.ok){try{localStorage.removeItem("hm_dirty")}catch(e){}}
+  },150);
+}
+const needLogin=()=>{if(user)return false;openAuth("Bu özelliği kullanmak için giriş yapmalısın.",0);return true};
+
+/* ---------- KART / SATIR ---------- */
+const bg=(h,id)=>`background:linear-gradient(${145+(id*37)%60}deg,hsl(${h},70%,22%),hsl(${(h+40)%360},60%,9%) 70%)`;
+function card(m){
+  const f=isFav(m),s=isSeen(m);
+  return `<div class="card ${s?"seen":""} ${popKey===key(m)?"pop":""}" data-k="${esc(key(m))}" style="${bg(m.h,m.id)}" onclick="openM(${m.id})">
+  <div class="gl">${esc(m.t.replace(/^(The|A)\s/,"").charAt(0))}</div>
+  ${m.img?`<img class="po" src="${m.img}" alt="${esc(m.t)}" loading="lazy" onerror="this.remove()">`:""}
+  <span class="yr">${m.y}</span><span class="rt">★ ${m.r.toFixed(1)}</span>
+  <h3>${esc(m.t)}</h3><div class="dr">${esc(m.d)}</div>
+  <button class="sn" onclick="event.stopPropagation();toggleSeen(${m.id})">${s?"✓ İzlendi":"👁 İzledim"}</button>
+  <button class="fav ${f?"on":""}" onclick="event.stopPropagation();fav(${m.id})">${f?"❤️":"🤍"}</button></div>`;
+}
+function row(title,desc,list,ico="",flag=""){
+  return `<section class="row" data-r="${esc(title)}" ${flag}><h2>${ico} ${title} <small>${list.length} film</small></h2>${desc?`<div class="desc">${desc}</div>`:""}
+  <div class="wrap"><button class="arr l hide" onclick="sc(this,-1)" aria-label="Sola">‹</button><div class="track">${list.map(card).join("")}</div><button class="arr r hide" onclick="sc(this,1)" aria-label="Sağa">›</button></div></section>`;
+}
+/* ok butonları: baştaysa sol, sondaysa sağ ok gizlenir */
+function updArrows(t){
+  const w=t.parentNode,l=w.querySelector(".arr.l"),r=w.querySelector(".arr.r");
+  l.classList.toggle("hide",t.scrollLeft<6);
+  r.classList.toggle("hide",t.scrollLeft+t.clientWidth>=t.scrollWidth-6);
+}
+function sc(b,d){
+  const t=b.parentNode.querySelector(".track");
+  const step=Math.max(240,t.clientWidth*.8);
+  t.scrollTo({left:Math.max(0,Math.min(t.scrollWidth-t.clientWidth,t.scrollLeft+d*step)),behavior:"smooth"});
+}
+function initRows(){
+  document.querySelectorAll(".track").forEach(t=>{
+    t.addEventListener("scroll",()=>updArrows(t),{passive:true});
+    updArrows(t);
+  });
+}
+addEventListener("resize",()=>document.querySelectorAll(".track").forEach(updArrows));
+
+/* ---------- HERO ---------- */
+function heroPool(){
+  const base=ALL.filter(m=>!isSeen(m)&&m.r>=7.5);
+  const withBd=base.filter(m=>m.bd);
+  return withBd.length>=3?withBd:base;
+}
+function setHero(m,instant){
+  hero=m;
+  const el=$("#hero");
+  const apply=()=>{
+    const g=gName(m.g);
+    el.style.background=`radial-gradient(circle at 70% 30%,hsl(${m.h},70%,24%),hsl(${(m.h+40)%360},60%,8%))`;
+    el.classList.toggle("hasbd",!!m.bd);el.classList.toggle("hasph",!m.bd&&!!m.img);
+    const pic=m.bd||m.img;$("#hbd").style.backgroundImage=pic?`url("${pic}")`:"none";
+    $("#hbig").textContent=m.t;
+    const hp=$("#hpo");hp.style.display=m.img?"":"none";if(m.img)hp.src=m.img;
+    $("#hin").innerHTML=`<span class="tag">${g.ico} ${g.name.toUpperCase()}</span><h1>${esc(m.t)}</h1>
+    <div class="meta"><span class="imdb">★ ${m.r.toFixed(1)}</span><span>${m.y}</span><span>${esc(m.d)}</span></div>
+    <p>${esc(m.l)}</p>
+    <button class="btn w" onclick="openM(${m.id})">▶ Detaylar</button>
+    <button class="btn g" onclick="fav(${m.id})">${isFav(m)?"✓ Listemde":"＋ Listeme Ekle"}</button>
+    <button class="btn g" onclick="toggleSeen(${m.id})">${isSeen(m)?"✓ İzlendi":"👁 İzledim"}</button>`;
+  };
+  if(instant||el.style.display==="none"){apply();return}
+  el.classList.add("swap");
+  const done=()=>{apply();el.classList.remove("swap")};
+  if(m.bd){const i=new Image();i.onload=i.onerror=()=>setTimeout(done,200);i.src=m.bd}else setTimeout(done,350);
+}
+function pickHero(){
+  const p=heroPool();
+  if(!p.length)return;
+  const c=p.filter(m=>!hero||m.id!==hero.id);
+  setHero((c.length?c:p)[Math.floor(Math.random()*(c.length||p.length))]);
+}
+
+function chips(){
+  $("#chips").innerHTML=`<button class="chip ${sub===""?"on":""}" onclick="pick('')">Tümü</button>`+
+  G.map(g=>`<button class="chip ${sub===g.id?"on":""}" onclick="pick('${g.id}')">${g.ico} ${g.name}</button>`).join("");
+}
+
+/* ---------- KOLEKSİYONLAR (film serileri) ---------- */
+const COLL=[
+["Halloween",/^Halloween/],
+["A Nightmare on Elm Street",/Elm Street|Freddy|New Nightmare/],
+["Friday the 13th",/^Friday the 13th|^Jason|Freddy vs\. Jason/],
+["Scream",/^Scream/],
+["The Texas Chain Saw Massacre",/Texas Chain|^Leatherface/],
+["Child's Play (Chucky)",/Child's Play|Chucky/],
+["Candyman",/^Candyman/],
+["Final Destination",/Final Destination/],
+["Terrifier",/^Terrifier/],
+["Happy Death Day",/^Happy Death Day/],
+["X (Maxine) Üçlemesi",/^(X|Pearl|MaXXXine)$/],
+["Black Christmas",/^Black Christmas/],
+["The Conjuring Evreni",/Conjuring|Annabelle|^The Nun|La Llorona/],
+["Insidious",/^Insidious/],
+["Poltergeist",/^Poltergeist/],
+["Sinister",/^Sinister/],
+["Smile",/^Smile/],
+["The Haunting",/^The Haunting/],
+["The Woman in Black",/Woman in Black/],
+["The Exorcist",/Exorcist|^Dominion/,/Exorcism|Last Exorcism/],
+["The Omen",/Omen/],
+["Suspiria",/^Suspiria/],
+["Living Dead (Romero ve Yeniden Çevrimler)",/Night of the Living Dead|Dawn of the Dead|^Day of the Dead|Land of the Dead|Diary of the Dead|Survival of the Dead/],
+["Return of the Living Dead",/Return of the Living Dead/],
+["Train to Busan",/Train to Busan|Seoul Station/],
+["28 Days Later",/^28 /],
+["Blade",/^Blade/],
+["From Dusk Till Dawn",/^From Dusk/],
+["Ginger Snaps",/^Ginger Snaps/],
+["An American Werewolf",/American Werewolf/],
+["Fright Night",/^Fright Night/],
+["Interview with the Vampire",/Interview with the Vampire|Queen of the Damned/],
+["Hammer Dracula",/Brides of Dracula|Dracula: Prince|Horror of Dracula/],
+["Nosferatu",/^Nosferatu/],
+["Psycho",/^Psycho/],
+["Hannibal Lecter",/Silence of the Lambs|^Hannibal|Red Dragon|^Manhunter/],
+["The Shining",/The Shining|Doctor Sleep/],
+["Carrie",/^Carrie|Rage: Carrie/],
+["Black Phone",/Black Phone/],
+["Blair Witch",/Blair Witch/],
+["Paranormal Activity",/Paranormal Activity/],
+["[REC]",/^\[REC\]/],
+["V/H/S",/^V\/H\/S/],
+["Hell House LLC",/^Hell House/],
+["Creep",/^Creep/],
+["Grave Encounters",/^Grave Encounters/],
+["Unfriended",/^Unfriended/],
+["The Last Exorcism",/Last Exorcism/],
+["Cloverfield",/Cloverfield/],
+["The Fly",/^The Fly/],
+["The Thing",/^The Thing/],
+["Rabid",/^Rabid/],
+["The Wicker Man",/Wicker Man/],
+["The Hills Have Eyes",/Hills Have Eyes/],
+["Saw",/^Saw|^Jigsaw|Book of Saw/],
+["Hostel",/^Hostel/],
+["Evil Dead",/Evil Dead|Army of Darkness/],
+["Firefly Ailesi (Rob Zombie)",/House of 1000 Corpses|Devil's Rejects|^3 from Hell/],
+["Re-Animator",/Re-Animator/],
+["Gremlins",/^Gremlins/],
+["Beetlejuice",/^Beetlejuice/],
+["Ghostbusters",/^Ghostbusters/],
+["Zombieland",/^Zombieland/],
+["Alien",/^Alien($|[ :s0-9])|^Aliens|^Prometheus/],
+["Predator",/Predator|^Prey$/],
+["Jaws",/^Jaws/],
+["A Quiet Place",/Quiet Place/],
+["The Descent",/^The Descent/],
+["Tremors",/^Tremors/],
+["Creature from the Black Lagoon",/Black Lagoon|Revenge of the Creature|Creature Walks/],
+["The Ring (Ringu)",/^Ringu|^Ring 0|^Rasen|^The Ring|^Rings|Sadako/],
+["Ju-On / The Grudge",/Ju-on|The Grudge|Sadako vs/],
+["Pulse (Kairo)",/^Pulse/],
+["Dark Water",/^Dark Water/],
+["The Eye",/^The Eye/],
+["Cube",/^Cube/],
+["The Strangers",/The Strangers/],
+["Funny Games",/^Funny Games/],
+["Don't Breathe",/Don't Breathe/],
+["Wolf Creek",/Wolf Creek/],
+["The Hitcher",/^The Hitcher/],
+["The Platform",/^The Platform/],
+["Speak No Evil",/^Speak No Evil/],
+["Bird Box",/^Bird Box/],
+["Frankenstein (Universal)",/Frankenstein/,/^Young Frankenstein/],
+["Dracula (Universal)",/^Dracula$|Dracula's Daughter|Son of Dracula|House of Dracula|House of Frankenstein/],
+["The Invisible Man",/Invisible Man/],
+["The Mummy",/^The Mummy/],
+["The Wolf Man",/Wolf Man/]
+].map(([name,re,ex])=>({name,films:ALL.filter(m=>re.test(m.t)&&!(ex&&ex.test(m.t))).sort((a,b)=>a.y-b.y||a.id-b.id)})).filter(c=>c.films.length>=2);
+/* en az bir filmi izlenmiş koleksiyonlar, tamamlanma oranına göre */
+/* ---------- ROZETLER ---------- */
+const BD=window.BADGES||{};
+const badgeInfo=c=>{const b=BD[c.name]||[c.name+" Ustası","🏅",(c.name.length*37)%360];return{title:b[0],icon:b[1],hue:b[2],svg:(window.BADGE_SVG||{})[c.name]||""}};
+const badgeEl=(c,{lock=false,mini=false}={})=>{const b=badgeInfo(c);return `<div class="bdg ${lock?"lock":""} ${mini?"mini":""}" style="--h:${b.hue}" title="${esc(b.title)}"><span>${lock&&!mini?"🔒":(b.svg||b.icon)}</span></div>`};
+let awardQ=[];
+function checkBadges(){
+  const fresh=COLL.filter(c=>c.films.every(isSeen)&&!badges[c.name]);
+  if(!fresh.length)return;
+  fresh.forEach(c=>{badges[c.name]=Date.now();awardQ.push(c)});
+  persist();showAward();
+}
+function showAward(){
+  if(!awardQ.length||$("#award").classList.contains("show"))return;
+  const c=awardQ.shift(),b=badgeInfo(c);
+  $("#award").innerHTML=`<div class="box"><div class="bdg" style="--h:${b.hue}"><span>${b.svg||b.icon}</span></div><h3>YENİ ROZET KAZANDIN</h3><h2>${esc(b.title)}</h2><p>${esc(c.name)} koleksiyonundaki ${c.films.length} filmin hepsini izledin. Rozet profiline eklendi!</p><button class="btn w" onclick="closeAward();go('profile')">Profilime Git</button><button class="btn g" onclick="closeAward()">Devam Et</button></div>`;
+  $("#award").classList.add("show");
+}
+function closeAward(){$("#award").classList.remove("show");setTimeout(showAward,350)}
+function seenCollections(){
+  return COLL.map(c=>({...c,n:c.films.filter(isSeen).length})).filter(c=>c.n>0)
+    .sort((a,b)=>b.n/b.films.length-a.n/a.films.length||b.n-a.n||a.name.localeCompare(b.name));
+}
+function collRow(c){
+  const pct=Math.round(c.n*100/c.films.length);
+  return `<section class="row" data-r="coll:${esc(c.name)}"><h2>🎞 ${esc(c.name)} Koleksiyonu <small>${c.n}/${c.films.length} izlendi</small></h2>
+  <div class="rbdg ${badges[c.name]?"got":""}">${badgeEl(c,{lock:!badges[c.name],mini:true})} ${badges[c.name]?"Rozet kazanıldı: "+esc(badgeInfo(c).title):"Tamamla, rozeti kap: "+esc(badgeInfo(c).title)}</div>
+  <div class="prog ${c.n===c.films.length?"done":""}"><i style="width:${pct}%"></i></div>
+  <div class="wrap"><button class="arr l hide" onclick="sc(this,-1)" aria-label="Sola">‹</button><div class="track">${c.films.map(card).join("")}</div><button class="arr r hide" onclick="sc(this,1)" aria-label="Sağa">›</button></div></section>`;
+}
+function seenPage(){
+  const list=ALL.filter(isSeen),cols=seenCollections();
+  const head=`<div class="collhead" style="padding-top:130px"><h2>👁 İzlediklerim</h2><p>Bir serinin herhangi bir filmini izlediysen o seri koleksiyon olarak görünür: izlediklerin renkli, henüz izlemediklerin gri.</p></div>`;
+  if(!list.length)return head+'<div class="empty" style="padding-top:60px">Henüz izlediğin film yok. Kartın üstündeki 👁 İzledim butonuna tıkla.</div>';
+  return head+(cols.length?cols.map(collRow).join(""):"")+
+    `<div class="collhead"><h2 style="font-size:1.3rem">Tüm izlediklerim <small style="color:var(--mut);font-weight:400;font-size:.8rem">${list.length} film</small></h2></div><div class="grid" style="padding-top:20px">${list.map(card).join("")}</div>`;
+}
+
+/* ---------- PROFİL ---------- */
+let pmsg=null;
+const profErr=r=>r.status===404||r.status===0?"Sunucu eski sürüm ya da kapalı. baslat.bat penceresini kapatıp yeniden aç, sonra Ctrl+F5 yap.":(r.d.error||"Bir hata oluştu.");
+const avatarSrc=()=>avatarV?(SB?avatarData:LOCAL?(lget().avatar||""):`/avatar/${encodeURIComponent(user)}?v=${avatarV}`):"";
+const avEl=(big=false)=>`<div class="av ${big?"big":""}">${avatarV?`<img src="${avatarSrc()}" alt="">`:esc((user||"?").charAt(0).toUpperCase())}</div>`;
+function profilePage(){
+  const earned=COLL.filter(c=>badges[c.name]).sort((a,b)=>badges[b.name]-badges[a.name]);
+  const locked=COLL.filter(c=>!badges[c.name]).map(c=>({...c,n:c.films.filter(isSeen).length})).sort((a,b)=>b.n/b.films.length-a.n/a.films.length);
+  const titles=earned.map(c=>badgeInfo(c).title);
+  return `<div class="prof"><div style="position:relative">${avEl(true)}</div>
+  <div class="info"><h1>${esc(user)}</h1><div class="lk" id="plk">${lakap?"“"+esc(lakap)+"”":"Henüz bir lakabın yok"}</div>
+  <div class="stats"><div><b>${seen.length}</b><span>izlenen film</span></div><div><b>${earned.length}/${COLL.length}</b><span>rozet</span></div><div><b>${favs.length}</b><span>listemde</span></div></div></div></div>
+  <div class="pedit"><input type="file" id="avf" accept="image/*" hidden><button class="btn g" onclick="$('#avf').click()">📷 Profil resmi seç</button>${LOCAL?"":'<button class="btn g" onclick="logout()">↩ Çıkış yap</button>'}${avatarV?'<button class="btn g" onclick="removeAvatar()">Resmi kaldır</button>':""}</div>
+  <form class="pedit" onsubmit="saveLakap();return false"><input type="text" id="lkin" maxlength="30" list="lkl" placeholder="Lakabın (ör. ${esc(titles[0]||"Gece Avcısı")})" value="${esc(lakap)}"><datalist id="lkl">${titles.map(t=>`<option value="${esc(t)}">`).join("")}</datalist><button class="btn w" type="submit">Lakabı Kaydet</button></form>
+  <div class="pedit" style="margin-top:0"><span id="pst" class="pst ${pmsg&&pmsg.ok?"ok":"err"}">${pmsg?esc(pmsg.t):""}</span></div>
+  ${LOCAL?`<div class="pedit" style="margin-top:2px"><span style="color:var(--mut);font-size:.8rem">Portfolyo sürümü: hesap gerekmez, verilerin yalnızca bu tarayıcıda saklanır.</span><button class="btn g" onclick="resetLocal(this)">Verilerimi sıfırla</button></div>`:""}
+  <div class="pedit" style="margin-top:2px"><span style="color:var(--mut);font-size:.8rem">İpucu: Kazandığın rozetlerin adını lakap olarak seçebilir ya da kendin yazabilirsin (en fazla 30 karakter).</span></div>
+  <div class="sec"><h2>🏅 Rozetlerim <small>${earned.length} kazanıldı</small></h2></div>
+  ${earned.length?`<div class="bgrid">${earned.map(c=>`<div class="bdgcard">${badgeEl(c)}<b>${esc(badgeInfo(c).title)}</b><small>${esc(c.name)}<br>${new Date(badges[c.name]).toLocaleDateString("tr-TR")}</small></div>`).join("")}</div>`:'<div class="sec" style="color:var(--mut);padding-top:10px">Bir koleksiyondaki tüm filmleri izleyince rozet kazanırsın. İlk rozetin için bir seri seç!</div>'}
+  <div class="sec"><h2>🔒 Kilitli rozetler <small>${locked.length}</small></h2></div>
+  <div class="bgrid" style="padding-bottom:40px">${locked.map(c=>`<div class="bdgcard lk">${badgeEl(c,{lock:true})}<b>${esc(badgeInfo(c).title)}</b><small>${esc(c.name)}<br>${c.n}/${c.films.length} izlendi</small></div>`).join("")}</div>`;
+}
+function resetLocal(b){
+  if(!b.dataset.s){b.dataset.s=1;b.textContent="Emin misin? Tekrar tıkla";return}
+  lset({});seen=[];favs=[];badges={};lakap="";avatarV=0;pmsg={ok:true,t:"Tüm verilerin sıfırlandı."};accUI();render();
+}
+function bindProfile(){
+  const f=$("#avf");if(f)f.addEventListener("change",e=>{const file=e.target.files[0];if(file)uploadAvatar(file)});
+}
+function uploadAvatar(file){
+  if(!/^image\//.test(file.type)){pmsg={ok:false,t:"Lütfen bir resim dosyası seç."};return render()}
+  const img=new Image(),url=URL.createObjectURL(file);
+  img.onload=async()=>{
+    const S=256,cv=document.createElement("canvas");cv.width=cv.height=S;
+    const m=Math.min(img.width,img.height),sx=(img.width-m)/2,sy=(img.height-m)/2;
+    const ctx=cv.getContext("2d");ctx.fillStyle="#000";ctx.fillRect(0,0,S,S);ctx.drawImage(img,sx,sy,m,m,0,0,S,S);
+    URL.revokeObjectURL(url);
+    const r=await API("/api/avatar",{method:"PUT",body:JSON.stringify({data:cv.toDataURL("image/jpeg",.85)})});
+    if(!r.ok){pmsg={ok:false,t:profErr(r)};return render()}
+    avatarV=r.d.avatar;if(r.d.avatarData!==undefined)avatarData=r.d.avatarData;pmsg={ok:true,t:"Profil resmin güncellendi."};accUI();render();
+  };
+  img.onerror=()=>{pmsg={ok:false,t:"Resim açılamadı."};render()};
+  img.src=url;
+}
+async function removeAvatar(){
+  const r=await API("/api/avatar",{method:"PUT",body:JSON.stringify({data:null})});
+  if(r.ok){avatarV=0;avatarData="";pmsg={ok:true,t:"Profil resmi kaldırıldı."}}else pmsg={ok:false,t:profErr(r)};accUI();render();
+}
+async function saveLakap(){
+  const r=await API("/api/profile",{method:"PUT",body:JSON.stringify({lakap:$("#lkin").value})});
+  if(!r.ok){pmsg={ok:false,t:profErr(r)};return render()}
+  lakap=r.d.lakap;pmsg={ok:true,t:lakap?"Lakap kaydedildi: “"+lakap+"”":"Lakap kaldırıldı."};accUI();render();
+}
+
+/* ---------- RENDER ---------- */
+function render(){
+  document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",b.dataset.v===(query?"search":view)));
+  chips();
+  $("#cnt").textContent=ALL.length+" film · "+G.length+" alt tür";
+  const main=$("#main"),h=$("#hero");
+  const showHero=!query&&!view&&!sub;
+  h.style.display=showHero?"flex":"none";
+  $("#chips").style.marginTop=showHero?"-6vh":"80px";
+  main.classList.toggle("seenview",view==="seen"&&!query);
+  if(view==="profile"&&user&&!query){main.innerHTML=profilePage();bindProfile();return}
+  if(view==="seen"&&!query){main.innerHTML=seenPage();initRows();return}
+  let list=null,title="";
+  if(query){const q=query.toLowerCase();list=ALL.filter(m=>(m.t+m.d+m.s+gName(m.g).name).toLowerCase().includes(q));title=`"${esc(query)}" için sonuçlar`}
+  else if(view==="seen"){list=ALL.filter(isSeen);title="👁 İzlediklerim"}
+  else if(view==="fav"){list=ALL.filter(isFav);title="Listem"}
+  else if(view==="top"){list=[...ALL].sort((a,b)=>b.r-a.r).slice(0,30);title="En Yüksek Puanlı 30 Film"}
+  else if(sub){const g=gName(sub);list=ALL.filter(m=>m.g===sub);title=g.ico+" "+g.name}
+  if(list){
+    if(sub&&!query&&!view){const g=gName(sub);main.innerHTML=`<div style="padding:130px 4% 0"><h2 style="font-size:2rem">${title}</h2><p style="color:var(--mut);margin-top:6px">${g.d}</p></div><div class="grid" style="padding-top:20px">${list.map(card).join("")}</div>`}
+    else main.innerHTML=list.length?`<div style="padding:130px 4% 0"><h2 style="font-size:1.8rem">${title}</h2></div><div class="grid" style="padding-top:20px">${list.map(card).join("")}</div>`
+      :`<div class="empty">${view==="seen"?"Henüz izlediğin film yok. Kartın üstündeki 👁 İzledim butonuna tıkla.":view==="fav"?"Listen boş. Bir filmin kalbine tıkla ❤️":"Sonuç bulunamadı 👻"}</div>`;
+    return;
+  }
+  const rows=[];
+  if(favs.length)rows.push(row("Listem","",ALL.filter(isFav),"❤️","data-favrow"));
+  rows.push(row("En Yüksek Puanlılar","IMDb'ye göre en çok beğenilenler",[...ALL].filter(m=>!isSeen(m)).sort((a,b)=>b.r-a.r).slice(0,15),"🏆"));
+  rows.push(row("Şans Eseri Seç","Bu gece ne izlesen?",SHUF.filter(m=>!isSeen(m)).slice(0,12),"🎲"));
+  G.forEach(g=>{const l=g.f.map(a=>ALL.find(m=>m.t===a[0]&&m.y===a[1])).filter(m=>!isSeen(m));if(l.length)rows.push(row(g.name,g.d,l,g.ico))});
+  if(seen.length)rows.push(row("İzlediklerim","İzlediğin filmler artık önerilmez",ALL.filter(isSeen),"👁","data-seenrow"));
+  main.innerHTML=rows.join("");
+  initRows();
+}
+/* ekran konumunu ve satır kaydırmalarını bozmadan yeniden çiz */
+function softRender(){
+  const y=scrollY;
+  const sl=new Map([...document.querySelectorAll(".row")].map(r=>[r.dataset.r,r.querySelector(".track").scrollLeft]));
+  const prev=new Set(sl.keys());
+  render();
+  document.querySelectorAll(".row").forEach(r=>{
+    if(sl.has(r.dataset.r)){const t=r.querySelector(".track");t.style.scrollBehavior="auto";t.scrollLeft=sl.get(r.dataset.r);t.style.scrollBehavior="";updArrows(t)}
+    else if(prev.size)r.classList.add("new");
+  });
+  popKey=null;
+  scrollTo({top:y,behavior:"instant"});
+}
+
+/* ---------- ANİMASYONLAR ---------- */
+const cardsOf=k=>[...document.querySelectorAll(".card")].filter(c=>c.dataset.k===k);
+function updateCards(k){
+  const m=ALL.find(x=>key(x)===k);if(!m)return;
+  cardsOf(k).forEach(c=>{
+    c.classList.toggle("seen",isSeen(m));
+    c.querySelector(".sn").textContent=isSeen(m)?"✓ İzlendi":"👁 İzledim";
+    const f=c.querySelector(".fav");f.classList.toggle("on",isFav(m));f.textContent=isFav(m)?"❤️":"🤍";
+  });
+}
+function collapseRow(sec){
+  sec.style.height=sec.offsetHeight+"px";sec.style.overflow="hidden";
+  sec.style.transition="height .5s cubic-bezier(.4,0,.2,1),opacity .4s,padding .5s";
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{sec.style.height="0";sec.style.opacity="0";sec.style.paddingTop="0";sec.style.paddingBottom="0"}));
+}
+function animateOut(cards){
+  return new Promise(res=>{
+    const tracks=new Set(),grids=new Set();
+    cards.forEach(c=>(c.parentElement.classList.contains("track")?tracks:grids).add(c.parentElement));
+    let ms=0;
+    tracks.forEach(t=>{
+      cards.filter(c=>c.parentElement===t).forEach(c=>c.classList.add("out"));
+      if(![...t.children].some(c=>!c.classList.contains("out"))){collapseRow(t.closest(".row"));ms=Math.max(ms,520)}
+      else ms=Math.max(ms,480);
+    });
+    grids.forEach(g=>{
+      const before=new Map([...g.children].map(c=>[c,c.getBoundingClientRect()]));
+      const mine=cards.filter(c=>c.parentElement===g);
+      mine.forEach(c=>c.classList.add("fade"));
+      setTimeout(()=>{
+        mine.forEach(c=>c.remove());
+        [...g.children].forEach(c=>{
+          const a=before.get(c),b=c.getBoundingClientRect(),dx=a.left-b.left,dy=a.top-b.top;
+          if(dx||dy)c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:"none"}],{duration:400,easing:"cubic-bezier(.2,.7,.2,1)"});
+        });
+      },300);
+      ms=Math.max(ms,720);
+    });
+    setTimeout(res,ms);
+  });
+}
+const isHome=()=>!query&&!view&&!sub;
+function afterChange(){
+  if(hero&&isSeen(hero))pickHero();else if(hero)setHero(hero,true);
+  if(isHome()||view==="seen")softRender();
+  else if(document.querySelector("#main .grid")&&!document.querySelector("#main .grid .card"))render();
+}
+async function toggleSeen(id){
+  if(needLogin())return;
+  const m=ALL[id],k=key(m),was=isSeen(m);
+  was?seen.splice(seen.indexOf(k),1):seen.push(k);
+  persist();popKey=k;
+  let gone=[];
+  if(isHome())gone=cardsOf(k).filter(c=>was?!!c.closest("[data-seenrow]"):!c.closest("[data-seenrow]"));
+  else if(view==="seen"&&was)gone=cardsOf(k).filter(c=>c.closest(".grid"));
+  updateCards(k);
+  if(gone.length)await animateOut(gone);
+  afterChange();
+  if(!was)checkBadges();
+}
+async function fav(id){
+  if(needLogin())return;
+  const m=ALL[id],k=key(m),was=isFav(m);
+  was?favs.splice(favs.indexOf(k),1):favs.push(k);
+  persist();popKey=null;
+  let gone=[];
+  if(isHome()&&was)gone=cardsOf(k).filter(c=>c.closest("[data-favrow]"));
+  else if(view==="fav"&&was)gone=cardsOf(k);
+  if(gone.length)await animateOut(gone);else updateCards(k);
+  afterChange();
+}
+
+/* ---------- MODAL ---------- */
+function miniCard(x){
+  return `<div class="mc ${isSeen(x)?"sn":""}" onclick="openM(${x.id})"><div class="mp" style="${bg(x.h,x.id)}">${esc(x.t.replace(/^(The|A)\s/,"").charAt(0))}${x.img?`<img src="${x.img}" alt="" loading="lazy" onerror="this.remove()">`:""}</div><span>${esc(x.t)}<small>${x.y}</small></span></div>`;
+}
+function openM(id){
+  const m=ALL[id],g=gName(m.g);
+  /* serinin diğer filmleri (yıla göre) + aynı türden en yakın puanlı birkaç benzer film */
+  const series=[];
+  COLL.filter(c=>c.films.some(f=>f.id===id)).forEach(c=>c.films.forEach(f=>{if(f.id!==id&&!series.some(s=>s.id===f.id))series.push(f)}));
+  series.sort((p,q)=>p.y-q.y);
+  const similar=ALL.filter(x=>x.g===m.g&&x.id!==id&&!series.some(s=>s.id===x.id))
+    .sort((p,q)=>Math.abs(p.r-m.r)-Math.abs(q.r-m.r)||q.r-p.r).slice(0,8);
+  const pic=m.bd||m.img;
+  $("#modal").innerHTML=`<div class="mh" style="${bg(m.h,m.id)}"><span class="gico">${g.ico}</span><button class="x" onclick="closeM()">✕</button>
+  <div class="mpo" style="${bg(m.h,m.id)}">${esc(m.t.replace(/^(The|A)\s/,"").charAt(0))}<small>${m.y}</small>${m.img?`<img src="${m.img}" alt="${esc(m.t)}" onerror="this.remove()">`:""}</div><h2>${esc(m.t)}</h2></div>
+  <div class="mb"><div class="meta"><span class="imdb">★ ${m.r.toFixed(1)}</span><span>${m.y}</span><span>🎬 ${esc(m.d)}</span></div>
+  <p>${esc(m.l)}</p>
+  <span class="pill">${g.ico} ${g.name}</span>
+  <div style="margin-top:18px"><button class="btn w" onclick="fav(${id}).then(()=>openM(${id}))">${isFav(m)?"✓ Listemde":"＋ Listeme Ekle"}</button>
+  <button class="btn g" onclick="toggleSeen(${id}).then(()=>openM(${id}))">${isSeen(m)?"✓ İzlendi":"👁 İzledim"}</button>
+  <button class="btn g" onclick="window.open('https://www.youtube.com/results?search_query='+encodeURIComponent('${esc(m.t).replace(/'/g,"\\'")} ${m.y} fragman'))">▶ Fragman Ara</button></div>
+  ${series.length?`<div class="more"><h4>🎞 Serinin diğer filmleri <small style="color:var(--mut);font-weight:400">${series.length}</small></h4><div class="mrow">${series.map(miniCard).join("")}</div></div>`:""}
+  ${similar.length?`<div class="more"><h4>Benzer filmler · ${g.name}</h4><div class="mrow">${similar.map(miniCard).join("")}</div></div>`:""}</div>`;
+  /* kapak görseli: yüklenirse uygula, yüklenemezse renkli zemin kalsın */
+  if(pic){const hd=$("#modal .mh"),im=new Image();im.onload=()=>{hd.style.background=`linear-gradient(#0009,#0006),url("${pic}") center 25%/cover`};im.src=pic}
+  $("#ov").classList.add("show");$("#ov").scrollTo(0,0);document.body.style.overflow="hidden";
+}
+function closeM(){$("#ov").classList.remove("show");if(!$("#auth").classList.contains("show"))document.body.style.overflow=""}
+$("#ov").addEventListener("click",e=>{if(e.target.id==="ov")closeM()});
+
+/* ---------- HESAP: giriş / kayıt / e-posta aktivasyonu ---------- */
+const UNAME_RE=/^[a-zA-Z][a-zA-Z0-9_]{2,19}$/;
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PW_RULES=[
+  ["En az 8 karakter (en fazla 64)",p=>p.length>=8&&p.length<=64],
+  ["Büyük ve küçük harf",p=>/[a-z]/.test(p)&&/[A-Z]/.test(p)],
+  ["En az bir rakam",p=>/\d/.test(p)],
+  ["Boşluk içermez",p=>p.length>0&&!/\s/.test(p)],
+  ["Kullanıcı adını içermez",(p,u)=>p.length>0&&!(u&&p.toLowerCase().includes(u.toLowerCase()))]
+];
+let tab=0;
+function accUI(){
+  $("#acc").innerHTML=user
+    ?`<div class="who" onclick="go('profile')" title="Profilim">${avEl()}<div class="nm">${esc(user)}${lakap?`<small>${esc(lakap)}</small>`:""}</div></div>${LOCAL?"":`<button class="acbtn o lo" onclick="logout()">Çıkış</button>`}`
+    :`<button class="acbtn o" onclick="openAuth('',0)">Giriş Yap</button><button class="acbtn" onclick="openAuth('',1)">Kayıt Ol</button>`;
+}
+function renderRules(){
+  const u=$("#au").value.trim(),p=$("#ap").value,p2=$("#ap2").value;
+  const items=[["Kullanıcı adı: 3-20 karakter, harfle başlar, sadece harf/rakam/_",UNAME_RE.test(u)],
+    ...PW_RULES.map(([t,f])=>["Şifre: "+t,f(p,u)]),
+    ["Şifreler eşleşiyor",p.length>0&&p===p2]];
+  $("#arules").innerHTML=items.map(([t,ok])=>`<div class="${ok?"ok":""}">${t}</div>`).join("");
+}
+function authTab(t){
+  tab=t;
+  $("#tl").classList.toggle("on",t===0);$("#tr").classList.toggle("on",t===1);
+  $("#au").style.display=$("#ap2").style.display=$("#arules").style.display=$("#ad").style.display=t?"":"none";
+  $("#ago").textContent=t?"Hesap Oluştur":"Giriş Yap";
+  $("#ap").autocomplete=t?"new-password":"current-password";
+  $("#aerr").textContent="";
+  if(t)renderRules();
+}
+function openAuth(msg,t=0){
+  authTab(t);
+  $("#amsg").textContent=msg||"İzlediklerini ve listeni kaydetmek için giriş yap veya kayıt ol.";
+  $("#auth").classList.add("show");document.body.style.overflow="hidden";
+  setTimeout(()=>$("#au").focus(),50);
+}
+function closeAuth(){$("#auth").classList.remove("show");document.body.style.overflow=$("#ov").classList.contains("show")?"hidden":"";$("#af").reset()}
+$("#auth").addEventListener("click",e=>{if(e.target.id==="auth")closeAuth()});
+["au","ap","ap2"].forEach(i=>$("#"+i).addEventListener("input",()=>{if(tab)renderRules()}));
+$("#af").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const err=m=>{$("#aerr").style.color="";$("#aerr").textContent=m};
+  const n=$("#au").value.trim(),p=$("#ap").value,btn=$("#ago");
+  if(tab===1){
+    const mail=$("#ae").value.trim();
+    if(!UNAME_RE.test(n))return err("Kullanıcı adı 3-20 karakter olmalı, harfle başlamalı ve sadece harf, rakam, _ içermeli.");
+    if(!EMAIL_RE.test(mail))return err("Geçerli bir e-posta adresi gir.");
+    const dv=$("#ad").value.trim();
+    if(!dv)return err("Davet kodu gerekli.");
+    const bad=PW_RULES.find(([,f])=>!f(p,n));
+    if(bad)return err("Şifre kuralı: "+bad[0]);
+    if(p!==$("#ap2").value)return err("Şifreler uyuşmuyor.");
+    btn.disabled=true;btn.textContent="Gönderiliyor…";
+    const r=await API("/api/register",{method:"POST",body:JSON.stringify({username:n,email:mail,password:p,davet:dv})});
+    btn.disabled=false;btn.textContent="Hesap Oluştur";
+    if(!r.ok)return err(r.d.error||"Kayıt başarısız.");
+    applyUser(r.d);
+    closeAuth();accUI();pickHero();render();checkBadges();
+    return;
+  }
+  const lm=$("#ae").value.trim();
+  if(!lm||!p)return err("E-posta ve şifre gerekli.");
+  btn.disabled=true;btn.textContent="Giriş yapılıyor…";
+  const r=await API("/api/login",{method:"POST",body:JSON.stringify({email:lm,password:p})});
+  btn.disabled=false;btn.textContent="Giriş Yap";
+  if(!r.ok)return err(r.d.error||"Giriş başarısız.");
+  applyUser(r.d);
+  closeAuth();accUI();pickHero();render();checkBadges();
+});
+function applyUser(d){
+  user=d.user;seen=d.seen||[];favs=d.favs||[];badges=d.badges||{};lakap=d.lakap||"";avatarV=d.avatar||0;avatarData=d.avatarData||"";
+}
+async function logout(){
+  await API("/api/logout",{method:"POST",body:"{}"});
+  user=null;seen=[];favs=[];badges={};lakap="";avatarV=0;view="";sub="";query="";$("#q").value="";
+  accUI();pickHero();render();scrollTo(0,0);
+}
+
+/* ---------- OLAYLAR ---------- */
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAuth();closeM()}});
+function pick(s){sub=s;view="";query="";$("#q").value="";render();scrollTo({top:0,behavior:"smooth"})}
+function go(v){if(v!=="profile")pmsg=null;if((v==="fav"||v==="seen"||v==="profile")&&needLogin())return;view=v;sub="";query="";$("#q").value="";render();scrollTo({top:0,behavior:"smooth"})}
+$("#q").addEventListener("input",e=>{query=e.target.value.trim();view="";sub="";render()});
+addEventListener("scroll",()=>$("#nav").classList.toggle("solid",scrollY>40));
+setInterval(()=>{if($("#hero").style.display!=="none"&&!$("#ov").classList.contains("show")&&!$("#auth").classList.contains("show")&&!document.hidden)pickHero()},9000);
+
+/* ---------- UYGULAMA: kurulum, servis işçisi, senkron ---------- */
+function openSearch(){go("");scrollTo(0,0);setTimeout(()=>$("#q").focus(),60)}
+let deferredInstall=null;
+const isStandalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const hint=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}};
+function showInstall(kind){
+  if(isStandalone||hint("hm_install_x"))return;
+  $("#itxt").textContent=kind==="ios"?"iPhone'a kurmak için Safari'de Paylaş (⬆︎) simgesine dokun, sonra \"Ana Ekrana Ekle\" de.":"HORRORMAX'i telefonuna uygulama olarak kurabilirsin.";
+  $("#iok").style.display=kind==="ios"?"none":"";
+  $("#install").classList.add("show");
+}
+addEventListener("online",()=>{if(SB&&user&&hint("hm_dirty")==="1")persist()});
+
+/* ---------- BAŞLANGIÇ ---------- */
+(async function init(){
+  const pool=heroPool();
+  setHero(pool[Math.floor(Math.random()*pool.length)],true);
+  accUI();render();
+  const STATIC=!!document.querySelector('meta[name="hm-mode"][content="static"]');
+  const me=(SB||!STATIC)?await API("/api/me"):{ok:false,status:0,d:{}};
+  if(!SB&&(!me.ok||me.d.user===undefined)){ // sunucu yok (ör. GitHub Pages): hesapsız yerel mod
+    LOCAL=true;const L=lget();
+    applyUser({user:"Ziyaretçi",seen:L.seen||[],favs:L.favs||[],badges:L.badges||{},lakap:L.lakap||"",avatar:L.avatarV||0});
+    accUI();pickHero();render();checkBadges();
+  }else if(me.d.user){applyUser(me.d);accUI();pickHero();render();checkBadges()}
+})();
+</script>
+</body>
+</html>

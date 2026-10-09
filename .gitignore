@@ -1,0 +1,15 @@
+# gizli anahtarlar ve yerel dosyalar (yanlışlıkla yüklenmesin)
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+service-account*.json
+*-adminsdk-*.json
+secrets.*
+.DS_Store
+Thumbs.db
+node_modules/
+*.log

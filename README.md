@@ -85,3 +85,7 @@ screenshots/   ekran görüntüleri
 Film bilgileri ve Türkçe açıklamalar bu proje için hazırlanmıştır; IMDb puanları yaklaşık değerlerdir. Bu proje kâr amacı gütmez, bir portfolyo çalışmasıdır.
 
 <sub>Bu ürün TMDB API'sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</sub>
+
+## 📄 Lisans
+
+**Tüm hakları saklıdır.** Kod, portfolyo amacıyla herkese açıktır: **okuyabilir ve inceleyebilirsiniz**, ama izinsiz kopyalayamaz, değiştirip yayımlayamaz ya da kendi ürününüzde kullanamazsınız. Ayrıntılar için [LICENSE](LICENSE), üçüncü taraf içerikler için [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Güvenlik açığı bildirimi için [SECURITY.md](SECURITY.md).
